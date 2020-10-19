@@ -6,6 +6,8 @@ byte dir;//Dirección actual de la serpiente
 byte ax = 0;//Posición en x de la manzana
 byte ay = 0;//Posición en y de la manzana
 byte scoreSnake;
+byte prevScoreSnake;
+byte speedSnake;
 
 boolean snakeGameOver;
 
@@ -59,7 +61,9 @@ void snakeInit() {
   ax = random(FIELD_WIDTH);
   ay = random(FIELD_HEIGHT);
   scoreSnake = 0;
-  
+  prevScoreSnake = 0;
+  speedSnake = 250;
+
   snakeGameOver = false;
 }
 
@@ -109,6 +113,12 @@ void runSnake() {
           i = 0;
         }
       }
+    }
+
+    //Aumento de velocidad de la serpiente
+    if ((scoreSnake - prevScoreSnake) == 5) {
+      prevScoreSnake = scoreSnake;
+      speedSnake = speedSnake - 25;
     }
 
     //Desfasar los segmentos del cuerpo de la serpiente
@@ -169,12 +179,12 @@ void runSnake() {
         die();
         break;
       }
-      if (curControl != BTN_NONE) { //Solo se puede cambiar de dirección una vez
+      if (curControl != BTN_NONE) {
         setDirection();
       }
       curTime = millis();
     }
-    while ((curTime - prevUpdateTime) < 250); //Luego de 250ms la serpiente se mueve
+    while ((curTime - prevUpdateTime) < speedSnake); //Luego de 250ms la serpiente se mueve
     prevUpdateTime = curTime;
   }
 }
