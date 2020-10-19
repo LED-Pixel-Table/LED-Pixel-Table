@@ -96,7 +96,7 @@ void runSpaceInvader () {
 
   while (spaceRunning) {
 
-    if (scoreSpace == 40) {
+    if (scoreSpace == 48) {
       Serial.print("e");
       spaceRunning = false;
       gameOverAnim(4);
